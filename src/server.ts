@@ -10,6 +10,7 @@ import limiter from "./lib/express-rate-limit";
 
 import v1 from "./routes/v1";
 import { connectToDB, disconnectFromDB } from "./lib/mongoose";
+import { logger } from "./lib/winston";
 
 const app = express();
 
@@ -36,12 +37,12 @@ app.use(limiter);
     app.use("/api/v1", v1);
 
     app.listen(env.PORT, () => {
-      console.log(`Server is running on http://localhost:${env.PORT}`);
+      logger.info(`Server is running on http://localhost:${env.PORT}`);
     });
   } catch (error) {
-    console.log("Failed to start server:", error);
+    logger.error("Failed to start server:", error);
     if (env.NODE_ENV === "production") {
-      console.log("Shutting down the server...");
+      logger.info("Shutting down the server...");
       process.exit(1);
     }
   }
@@ -51,10 +52,10 @@ app.use(limiter);
 const handleServerShutdown = async () => {
   try {
     await disconnectFromDB();
-    console.log("Shutting down the server...");
+    logger.info("Shutting down the server...");
     process.exit(0);
   } catch (error) {
-    console.log("Failed to shut down the server:", error);
+    logger.error("Failed to shut down the server:", error);
     process.exit(1);
   }
 };

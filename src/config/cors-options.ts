@@ -1,5 +1,6 @@
 import type { CorsOptions } from "cors";
 import env from "./env";
+import { logger } from "@/lib/winston";
 
 const corsOptions: CorsOptions = {
   origin(origin, callback) {
@@ -14,6 +15,7 @@ const corsOptions: CorsOptions = {
         new Error(`Not allowed by CORS: ${origin} is not allowed`),
         false,
       );
+      logger.warn(`Not allowed by CORS: ${origin} is not allowed`);
     }
   },
 };

@@ -10,6 +10,7 @@ const env = {
     "https://blog-api-docs.vercel.app",
   ],
   MONGODB_URI: process.env.MONGODB_URI,
+  LOG_LEVEL: process.env.LOG_LEVEL || "info",
 };
 
 export default env;

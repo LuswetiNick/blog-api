@@ -1,6 +1,7 @@
 import env from "@/config/env";
 import mongoose from "mongoose";
 import type { ConnectOptions } from "mongoose";
+import { logger } from "./winston";
 
 const clientOptions: ConnectOptions = {
   dbName: "bloggy",
@@ -20,12 +21,12 @@ export const connectToDB = async (): Promise<void> => {
 
   try {
     await mongoose.connect(env.MONGODB_URI, clientOptions);
-    console.log("Connected to Database successfully");
+    logger.info("Connected to Database successfully");
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
-    console.log("Failed to connect to Database", error);
+    logger.error("Failed to connect to Database", error);
   }
 };
 
@@ -33,11 +34,11 @@ export const connectToDB = async (): Promise<void> => {
 export const disconnectFromDB = async (): Promise<void> => {
   try {
     await mongoose.disconnect();
-    console.log("Disconnected from Database successfully");
+    logger.info("Disconnected from Database successfully");
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
-    console.log("Failed to disconnect from Database", error);
+    logger.error("Failed to disconnect from Database", error);
   }
 };
