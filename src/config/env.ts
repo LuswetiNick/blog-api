@@ -19,7 +19,7 @@ const env = {
     .JWT_ACCESS_TOKEN_EXPIRES_IN as ms.StringValue,
   JWT_REFRESH_TOKEN_EXPIRES_IN: process.env
     .JWT_REFRESH_TOKEN_EXPIRES_IN as ms.StringValue,
-  WHITELIST_ADMINS_EMAIL: ["nicklusweti@protonmail.com"],
+  WHITELIST_ADMINS_EMAIL: ["nicklusweti@protonmail.com", "john@doe.com"],
 };
 
 export default env;

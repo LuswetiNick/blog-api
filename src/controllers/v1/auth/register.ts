@@ -1,9 +1,9 @@
 import env from "@/config/env";
 import { generateAccessToken, generateRefreshToken } from "@/lib/jwt";
 import { logger } from "@/lib/winston";
-import token from "@/models/token";
+import Token from "@/models/token";
 import type { IUser } from "@/models/user";
-import user from "@/models/user";
+import User from "@/models/user";
 import { generateUsername } from "@/utils";
 import type { Request, Response } from "express";
 
@@ -24,7 +24,7 @@ const register = async (req: Request, res: Response): Promise<void> => {
 
   try {
     const username = generateUsername();
-    const newUser = await user.create({
+    const newUser = await User.create({
       username,
       email,
       password,
@@ -35,7 +35,7 @@ const register = async (req: Request, res: Response): Promise<void> => {
     const refreshToken = generateRefreshToken(newUser._id);
 
     // Save refresh token to database
-    await token.create({
+    await Token.create({
       token: refreshToken,
       userId: newUser._id,
     });
