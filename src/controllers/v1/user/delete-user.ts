@@ -18,7 +18,7 @@ const deleteCurrentUser = async (
       message: "Internal Server Error",
       error: error,
     });
-    logger.error("Failed to delete current user:", error);
+    logger.error("Failed to delete the  current user:", error);
   }
 };
 
