@@ -6,6 +6,8 @@ import { Router } from "express";
 import { body, cookie } from "express-validator";
 import bcrypt from "bcrypt";
 import refreshToken from "@/controllers/v1/auth/refresh-token";
+import logout from "@/controllers/v1/auth/logout";
+import authenticate from "@/middlewares/authenticate";
 
 const router = Router();
 
@@ -88,5 +90,5 @@ router.post(
   validationError,
   refreshToken,
 );
-
+router.post("/logout", authenticate, logout);
 export default router;
