@@ -4,13 +4,12 @@ import { logger } from "@/lib/winston";
 import Token from "@/models/token";
 import type { IUser } from "@/models/user";
 import User from "@/models/user";
-import { generateUsername } from "@/utils";
 import type { Request, Response } from "express";
 
-type UserData = Pick<IUser, "email" | "password" | "role">;
+type UserData = Pick<IUser, "email" | "password" | "role" | "username">;
 
 const register = async (req: Request, res: Response): Promise<void> => {
-  const { email, password, role } = req.body as UserData;
+  const { email, password, role, username } = req.body as UserData;
   if (role === "admin" && !env.WHITELIST_ADMINS_EMAIL.includes(email)) {
     res.status(403).json({
       code: "FORBIDDEN",
@@ -23,7 +22,6 @@ const register = async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const username = generateUsername();
     const newUser = await User.create({
       username,
       email,
